@@ -32,7 +32,7 @@ def assess_distribution_learning(model: DistributionMatchingGenerator,
                                   chembl_training_file=chembl_training_file,
                                   json_output_file=json_output_file,
                                   benchmark_version=benchmark_version,
-                                  number_samples=10000)
+                                  number_samples=number_samples)
 
 
 def _assess_distribution_learning(model: DistributionMatchingGenerator,
