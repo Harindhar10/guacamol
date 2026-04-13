@@ -11,7 +11,7 @@ from guacamol.benchmark_suites import distribution_learning_benchmark_suite
 from guacamol.utils.data import get_time_string
 
 logger = logging.getLogger(__name__)
-logger.addHandler(logging.NullHandler())
+# logger.addHandler(logging.NullHandler())
 
 
 def assess_distribution_learning(model: DistributionMatchingGenerator,
