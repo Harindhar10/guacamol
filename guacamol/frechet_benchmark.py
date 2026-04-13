@@ -41,6 +41,8 @@ class FrechetBenchmark(DistributionLearningBenchmark):
         self.reference_molecules = get_random_subset(training_set, self.sample_size, seed=42)
 
     def assess_model(self, model: DistributionMatchingGenerator) -> DistributionLearningBenchmarkResult:
+        print('FrechetBenchmark benchmark started')
+        print('self.training_set_molecules',self.training_set_molecules)
         chemnet = self._load_chemnet()
 
         start_time = time.time()
@@ -63,6 +65,7 @@ class FrechetBenchmark(DistributionLearningBenchmark):
             'FCD': FCD
         }
 
+        print('Frechet benchmark ended')
         return DistributionLearningBenchmarkResult(benchmark_name=self.name,
                                                    score=score,
                                                    sampling_time=end_time - start_time,
