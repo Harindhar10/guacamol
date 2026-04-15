@@ -49,6 +49,8 @@ class FrechetBenchmark(DistributionLearningBenchmark):
         generated_molecules = sample_valid_molecules(model=model, number_molecules=self.number_samples)
         end_time = time.time()
 
+        print('time taken for generating in mins: ',(end_time-start_time)/60)
+
         if len(generated_molecules) != self.number_samples:
             logger.warning('The model could not generate enough valid molecules.')
 

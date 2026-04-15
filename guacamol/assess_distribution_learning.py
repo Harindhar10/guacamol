@@ -10,6 +10,7 @@ from guacamol.distribution_matching_generator import DistributionMatchingGenerat
 from guacamol.benchmark_suites import distribution_learning_benchmark_suite
 from guacamol.utils.data import get_time_string
 
+logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 # logger.addHandler(logging.NullHandler())
 
@@ -90,6 +91,10 @@ def _evaluate_distribution_learning_benchmarks(model: DistributionMatchingGenera
         logger.info(f'  Sampling time: {str(datetime.timedelta(seconds=int(result.sampling_time)))}')
         logger.info(f'  Metadata: {result.metadata}')
         results.append(result)
+        print(f'Results for the benchmark "{result.benchmark_name}":')
+        print(f'  Score: {result.score:.6f}')
+        print(f'  Sampling time: {str(datetime.timedelta(seconds=int(result.sampling_time)))}')
+        print(f'  Metadata: {result.metadata}')
 
     logger.info('Finished execution of the benchmarks')
 
