@@ -42,7 +42,7 @@ class FrechetBenchmark(DistributionLearningBenchmark):
 
     def assess_model(self, model: DistributionMatchingGenerator) -> DistributionLearningBenchmarkResult:
         print('FrechetBenchmark benchmark started')
-        print('self.training_set_molecules',self.training_set_molecules)
+        print('self.training_set_molecules',self.reference_molecules)
         chemnet = self._load_chemnet()
 
         start_time = time.time()
