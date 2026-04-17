@@ -25,17 +25,10 @@ def sample_valid_molecules(model: DistributionMatchingGenerator, number_molecule
 
     while len(valid_molecules) < number_molecules and number_already_sampled < max_samples:
         remaining_to_sample = number_molecules - len(valid_molecules)
-
-        import time
-        start_time = time.time()
         samples = model.generate(remaining_to_sample)
-        end_time = time.time()
-        print('time taken for one generation: ',(end_time-start_time)/60)
-
+        print('sample generated molecules: ',samples[:100])
 
         number_already_sampled += remaining_to_sample
-
-        print('generated molecules: ',samples)
         valid_molecules += [m for m in samples if is_valid(m)]
 
     return valid_molecules
@@ -65,16 +58,11 @@ def sample_unique_molecules(model: DistributionMatchingGenerator, number_molecul
 
     while len(unique_list) < number_molecules and number_already_sampled < max_samples:
         remaining_to_sample = number_molecules - len(unique_list)
-        
-        import time
-        
-        start_time = time.time()
+            
         samples = model.generate(remaining_to_sample)
         number_already_sampled += remaining_to_sample
-        end_time = time.time()
 
-        print('time taken for one generation: ',(end_time-start_time)/60)
-        print('generated molecules: ',samples)
+        print('sample generated molecules: ',samples[:100])
 
         for smiles in samples:
             canonical_smiles = canonicalize(smiles)

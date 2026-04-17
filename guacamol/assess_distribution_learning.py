@@ -56,10 +56,7 @@ def _assess_distribution_learning(model: DistributionMatchingGenerator,
     benchmark_results['guacamol_version'] = guacamol.__version__
     benchmark_results['benchmark_suite_version'] = benchmark_version
     benchmark_results['timestamp'] = get_time_string()
-    print('_assess_ditribution learning started')
     benchmark_results['samples'] = model.generate(100)
-    print('_assess_ditribution learning ended')
-
     benchmark_results['results'] = [vars(result) for result in results]
 
     logger.info(f'Save results to file {json_output_file}')
@@ -91,10 +88,6 @@ def _evaluate_distribution_learning_benchmarks(model: DistributionMatchingGenera
         logger.info(f'  Sampling time: {str(datetime.timedelta(seconds=int(result.sampling_time)))}')
         logger.info(f'  Metadata: {result.metadata}')
         results.append(result)
-        print(f'Results for the benchmark "{result.benchmark_name}":')
-        print(f'  Score: {result.score:.6f}')
-        print(f'  Sampling time: {str(datetime.timedelta(seconds=int(result.sampling_time)))}')
-        print(f'  Metadata: {result.metadata}')
 
     logger.info('Finished execution of the benchmarks')
 

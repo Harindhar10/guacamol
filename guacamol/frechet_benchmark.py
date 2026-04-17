@@ -41,14 +41,11 @@ class FrechetBenchmark(DistributionLearningBenchmark):
         self.reference_molecules = get_random_subset(training_set, self.sample_size, seed=42)
 
     def assess_model(self, model: DistributionMatchingGenerator) -> DistributionLearningBenchmarkResult:
-        print('FrechetBenchmark benchmark started')
         chemnet = self._load_chemnet()
 
         start_time = time.time()
         generated_molecules = sample_valid_molecules(model=model, number_molecules=self.number_samples)
         end_time = time.time()
-
-        print('time taken for generating in mins: ',(end_time-start_time)/60)
 
         if len(generated_molecules) != self.number_samples:
             logger.warning('The model could not generate enough valid molecules.')
@@ -66,7 +63,6 @@ class FrechetBenchmark(DistributionLearningBenchmark):
             'FCD': FCD
         }
 
-        print('Frechet benchmark ended')
         return DistributionLearningBenchmarkResult(benchmark_name=self.name,
                                                    score=score,
                                                    sampling_time=end_time - start_time,

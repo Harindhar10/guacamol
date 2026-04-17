@@ -65,14 +65,9 @@ class ValidityBenchmark(DistributionLearningBenchmark):
         super().__init__(name='Validity', number_samples=number_samples)
 
     def assess_model(self, model: DistributionMatchingGenerator) -> DistributionLearningBenchmarkResult:
-        print('Validity benchmark started')
-        print('self.number_samples',self.number_samples)
         start_time = time.time()
         molecules = model.generate(number_samples=self.number_samples)
         end_time = time.time()
-
-        print('time taken for generating in mins: ',(end_time-start_time)/60)
-
         if len(molecules) != self.number_samples:
             raise Exception('The model did not generate the correct number of molecules')
 
@@ -82,8 +77,7 @@ class ValidityBenchmark(DistributionLearningBenchmark):
             'number_samples': self.number_samples,
             'number_valid': number_valid,
         }
-
-        print('Validity benchmark completed')
+        
         return DistributionLearningBenchmarkResult(benchmark_name=self.name,
                                                    score=validity_ratio,
                                                    sampling_time=end_time - start_time,
@@ -98,15 +92,11 @@ class UniquenessBenchmark(DistributionLearningBenchmark):
     def __init__(self, number_samples) -> None:
         super().__init__(name='Uniqueness', number_samples=number_samples)
 
-    def assess_model(self, model: DistributionMatchingGenerator) -> DistributionLearningBenchmarkResult:
-        print('Uniqueness benchmark started')
-        print('self.number_samples',self.number_samples)
+    def assess_model(self, model: DistributionMatchingGenerator) -> DistributionLearningBenchmarkResult
 
         start_time = time.time()
         molecules = sample_valid_molecules(model=model, number_molecules=self.number_samples)
         end_time = time.time()
-
-        print('time taken for generating in mins: ',(end_time-start_time)/60)
 
         if len(molecules) != self.number_samples:
             logger.warning('The model could not generate enough valid molecules. The score will be penalized.')
@@ -119,9 +109,6 @@ class UniquenessBenchmark(DistributionLearningBenchmark):
             'number_samples': self.number_samples,
             'number_unique': len(unique_molecules)
         }
-
-        print('Uniqueness benchmark completed')
-
         return DistributionLearningBenchmarkResult(benchmark_name=self.name,
                                                    score=unique_ratio,
                                                    sampling_time=end_time - start_time,
@@ -145,13 +132,10 @@ class NoveltyBenchmark(DistributionLearningBenchmark):
         Args:
             model: model to assess
         """
-        print('Novelty benchmark started')
-        print('self.training_set_molecules',self.training_set_molecules)
         start_time = time.time()
         molecules = sample_unique_molecules(model=model, number_molecules=self.number_samples, max_tries=2)
         end_time = time.time()
 
-        print('time taken for generating in mins: ',(end_time-start_time)/60)
 
         if len(molecules) != self.number_samples:
             logger.warning('The model could not generate enough unique molecules. The score will be penalized.')
@@ -168,7 +152,6 @@ class NoveltyBenchmark(DistributionLearningBenchmark):
             'number_novel': len(novel_molecules)
         }
 
-        print('Novelty benchmark ended')
 
         return DistributionLearningBenchmarkResult(benchmark_name=self.name,
                                                    score=novel_ratio,
@@ -209,13 +192,9 @@ class KLDivBenchmark(DistributionLearningBenchmark):
         Args:
             model: model to assess
         """
-        print('KLDiv benchmark started')
-        print('self.training_set_molecules',self.training_set_molecules)
         start_time = time.time()
         molecules = sample_unique_molecules(model=model, number_molecules=self.number_samples, max_tries=2)
         end_time = time.time()
-        print('time taken for generating in mins: ',(end_time-start_time)/60)
-
 
         if len(molecules) != self.number_samples:
             logger.warning('The model could not generate enough unique molecules. The score will be penalized.')
@@ -267,8 +246,6 @@ class KLDivBenchmark(DistributionLearningBenchmark):
         # Then their average delivers the final score.
         partial_scores = [np.exp(-score) for score in kldivs.values()]
         score = sum(partial_scores) / len(partial_scores)
-
-        print('Kldiv benchmark ended')
         return DistributionLearningBenchmarkResult(benchmark_name=self.name,
                                                    score=score,
                                                    sampling_time=end_time - start_time,
