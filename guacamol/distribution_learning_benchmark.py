@@ -92,7 +92,7 @@ class UniquenessBenchmark(DistributionLearningBenchmark):
     def __init__(self, number_samples) -> None:
         super().__init__(name='Uniqueness', number_samples=number_samples)
 
-    def assess_model(self, model: DistributionMatchingGenerator) -> DistributionLearningBenchmarkResult
+    def assess_model(self, model: DistributionMatchingGenerator) -> DistributionLearningBenchmarkResult:
 
         start_time = time.time()
         molecules = sample_valid_molecules(model=model, number_molecules=self.number_samples)
